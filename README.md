@@ -59,6 +59,14 @@ Le linee guida complete di deploy sono disponibili in [`DEPLOYMENT.md`](DEPLOYME
 - Le edge functions implementano CORS centralizzato e logging
 - Tutte le tabelle del database hanno RLS attivo
 
+## 🛠️ Risoluzione problemi comuni
+
+- **Errore `Failed to resolve import "@hookform/resolvers/zod"`** → Questo significa che non è stata installata la dipendenza `@hookform/resolvers`. Apri il terminale nella cartella del progetto ed esegui:
+  ```bash
+  npm install @hookform/resolvers
+  ```
+  Se l'errore persiste, ripeti anche `npm install` per reinstallare tutte le librerie e riavvia il comando `npm run dev`.
+
 ## 🤝 Contributi
 
 1. Crea un branch dalla `main`
