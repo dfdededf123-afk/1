@@ -1,0 +1,82 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+
+export const Auth = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    setLoading(true);
+    setMessage(null);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+    setMessage("Accesso effettuato! Ti stiamo portando alla dashboard...");
+    navigate("/", { replace: true });
+  };
+
+  const handleSignup = async () => {
+    setLoading(true);
+    setMessage(null);
+    const { error, data } = await supabase.auth.signUp({ email, password });
+    setLoading(false);
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+
+    if (data.session) {
+      setMessage("Registrazione completata! Accesso automatico in corso...");
+      navigate("/", { replace: true });
+      return;
+    }
+
+    setMessage("Registrazione completata! Ora puoi accedere con le tue credenziali.");
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-muted/20">
+      <div className="w-full max-w-md rounded-xl border bg-background p-8 shadow">
+        <h1 className="text-2xl font-semibold">Accedi a LogiTrack</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Gestisci flotte, autisti e percorsi in un'unica piattaforma.</p>
+        <div className="mt-6 space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Email</label>
+            <input
+              className="w-full rounded-md border px-3 py-2"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Password</label>
+            <input
+              className="w-full rounded-md border px-3 py-2"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          {message && <p className="text-sm text-muted-foreground">{message}</p>}
+          <div className="flex gap-2">
+            <Button className="flex-1" onClick={handleLogin} disabled={loading}>
+              Accedi
+            </Button>
+            <Button className="flex-1" variant="outline" onClick={handleSignup} disabled={loading}>
+              Registrati
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
