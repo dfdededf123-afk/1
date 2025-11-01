@@ -1,0 +1,14 @@
+[functions]
+binary_path = "deno"
+[functions.logi-agent]
+verify_jwt = true
+[functions.fetch-vehicle-specs]
+verify_jwt = true
+[functions.get-vehicle-models]
+verify_jwt = true
+[functions.process-document]
+verify_jwt = true
+[functions.check-deadlines]
+verify_jwt = true
+[functions.setup-admin]
+verify_jwt = false

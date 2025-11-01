@@ -1,0 +1,22 @@
+_format_version: "2.1"
+_transform: true
+services:
+  - name: logitrack-edge
+    url: http://supabase-edge:54321
+    routes:
+      - name: logitrack-edge-route
+        paths:
+          - /functions/v1
+plugins:
+  - name: cors
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - OPTIONS
+      headers:
+        - Authorization
+        - Content-Type
+        - apikey
