@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
@@ -7,21 +8,38 @@ export const Auth = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     setLoading(true);
     setMessage(null);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-    setMessage(error ? error.message : "Controlla la tua email per il link di accesso");
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+    setMessage("Accesso effettuato! Ti stiamo portando alla dashboard...");
+    navigate("/", { replace: true });
   };
 
   const handleSignup = async () => {
     setLoading(true);
     setMessage(null);
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error, data } = await supabase.auth.signUp({ email, password });
     setLoading(false);
-    setMessage(error ? error.message : "Registrazione completata. Verifica la tua email.");
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+
+    if (data.session) {
+      setMessage("Registrazione completata! Accesso automatico in corso...");
+      navigate("/", { replace: true });
+      return;
+    }
+
+    setMessage("Registrazione completata! Ora puoi accedere con le tue credenziali.");
   };
 
   return (

@@ -16,6 +16,7 @@
     "export:storage": "node scripts/export-storage.js",
     "import:storage": "node scripts/import-storage.js",
     "setup:local": "node scripts/setup-local.js",
+    "db:migrate": "node scripts/apply-migrations.js",
     "setup:admin": "node scripts/create-admin.js"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "inquirer": "9.3.7",
     "lucide-react": "0.474.0",
     "mapbox-gl": "3.16.0",
+    "pg": "8.13.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "7.61.1",

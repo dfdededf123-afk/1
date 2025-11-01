@@ -17,6 +17,7 @@ async function main() {
     VITE_SUPABASE_PUBLISHABLE_KEY: await prompt('Supabase anon key'),
     SUPABASE_SERVICE_ROLE_KEY: await prompt('Supabase service role key'),
     VITE_SUPABASE_PROJECT_ID: await prompt('Supabase project id'),
+    SUPABASE_DB_URL: await prompt('Supabase DB connection string (opzionale, utile per applicare le migrazioni)'),
     AI_PROVIDER: await prompt('AI provider', 'openai'),
     OPENAI_API_KEY: await prompt('OpenAI API key'),
     VITE_MAPBOX_TOKEN: await prompt('Mapbox token'),

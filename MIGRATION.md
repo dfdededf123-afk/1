@@ -11,7 +11,7 @@ Questa guida descrive i passaggi necessari per migrare da una precedente install
 ## 2. Setup nuovo progetto
 
 1. Crea un nuovo progetto Supabase
-2. Importa le migrazioni presenti in `supabase/migrations/`
+2. Importa le migrazioni presenti in `supabase/migrations/` (in locale puoi usare `npm run db:migrate` dopo aver impostato `SUPABASE_DB_URL`)
 3. Configura le edge functions tramite `supabase functions deploy`
 4. Popola le variabili ambiente seguendo `.env.example`
 

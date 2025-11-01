@@ -10,16 +10,21 @@ LogiTrack è una piattaforma completa di gestione flotte costruita su Supabase e
    npm install
    ```
 3. **Configura l'ambiente**
- ```bash
-  cp .env.example .env
-  npm run setup:local
-  ```
+   ```bash
+   cp .env.example .env
+   npm run setup:local
+   ```
+4. **Applica le migrazioni del database** (richiede la `SUPABASE_DB_URL`, recuperabile da Supabase → Project Settings → Database → Connection string `psql`)
+   ```bash
+   npm run db:migrate
+   ```
+   Questo step crea automaticamente le tabelle necessarie (`profiles`, `user_roles`, ecc.).
 5. **Crea un account amministratore (opzionale ma consigliato)**
    ```bash
    npm run setup:admin
    ```
    Lo script ti farà alcune domande (email, password, nome). Al termine avrai un utente con tutti i permessi per accedere all'app.
-4. **Avvia il server di sviluppo**
+6. **Avvia il server di sviluppo**
    ```bash
    npm run dev
    ```
@@ -69,7 +74,7 @@ Se è la prima volta che avvii LogiTrack dovrai avere almeno un utente con i per
    ```
 3. Inserisci email e password quando richiesto. Alla fine del processo vedrai un messaggio di conferma.
 
-Lo script usa in modo sicuro la **service role key** (solo in locale) per creare l'utente in Supabase, aggiornare il profilo e assegnare automaticamente il ruolo `admin`.
+Se hai impostato anche `SUPABASE_DB_URL`, lo script applicherà automaticamente le migrazioni mancanti prima di aggiornare il profilo e assegnare il ruolo `admin`. In caso contrario ti indicherà di eseguire manualmente `npm run db:migrate` e potrai rilanciarlo dopo aver sistemato il database.
 
 ## 🔐 Sicurezza
 
@@ -84,6 +89,7 @@ Lo script usa in modo sicuro la **service role key** (solo in locale) per creare
   npm install @hookform/resolvers
   ```
   Se l'errore persiste, ripeti anche `npm install` per reinstallare tutte le librerie e riavvia il comando `npm run dev`.
+- **Messaggio "Could not find the table 'public.profiles' in the schema cache" durante `npm run setup:admin`** → Significa che il database non ha ancora le tabelle di LogiTrack. Recupera da Supabase la connection string `psql`, aggiungila al file `.env` come `SUPABASE_DB_URL` ed esegui `npm run db:migrate`. Quando le migrazioni terminano, rilancia `npm run setup:admin`.
 
 ## 🤝 Contributi
 
