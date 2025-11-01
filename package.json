@@ -15,7 +15,8 @@
     "health-check": "node scripts/health-check.js",
     "export:storage": "node scripts/export-storage.js",
     "import:storage": "node scripts/import-storage.js",
-    "setup:local": "node scripts/setup-local.js"
+    "setup:local": "node scripts/setup-local.js",
+    "setup:admin": "node scripts/create-admin.js"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",

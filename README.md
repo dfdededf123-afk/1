@@ -10,10 +10,15 @@ LogiTrack è una piattaforma completa di gestione flotte costruita su Supabase e
    npm install
    ```
 3. **Configura l'ambiente**
+ ```bash
+  cp .env.example .env
+  npm run setup:local
+  ```
+5. **Crea un account amministratore (opzionale ma consigliato)**
    ```bash
-   cp .env.example .env
-   npm run setup:local
+   npm run setup:admin
    ```
+   Lo script ti farà alcune domande (email, password, nome). Al termine avrai un utente con tutti i permessi per accedere all'app.
 4. **Avvia il server di sviluppo**
    ```bash
    npm run dev
@@ -52,6 +57,19 @@ Le linee guida complete di deploy sono disponibili in [`DEPLOYMENT.md`](DEPLOYME
 - [`PROJECT_ARCHITECTURE.md`](PROJECT_ARCHITECTURE.md): blueprint completo
 - [`MIGRATION.md`](MIGRATION.md): guida alla migrazione
 - [`DEPLOYMENT.md`](DEPLOYMENT.md): strategie di rilascio
+
+## 👤 Creare un amministratore
+
+Se è la prima volta che avvii LogiTrack dovrai avere almeno un utente con i permessi completi:
+
+1. Assicurati di aver eseguito `npm run setup:local` e di avere nel file `.env` le variabili `VITE_SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`.
+2. Nel terminale esegui:
+   ```bash
+   npm run setup:admin
+   ```
+3. Inserisci email e password quando richiesto. Alla fine del processo vedrai un messaggio di conferma.
+
+Lo script usa in modo sicuro la **service role key** (solo in locale) per creare l'utente in Supabase, aggiornare il profilo e assegnare automaticamente il ruolo `admin`.
 
 ## 🔐 Sicurezza
 
